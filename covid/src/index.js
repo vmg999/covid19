@@ -47,11 +47,13 @@ class Dashboard {
             this.showTotal(this.data);
             this.showDate(this.data);
 
-            this.countries = new CountriesTable(this.data);
+            this.statistic = new StatisticTable(this.data);
+            this.countries = new CountriesTable(this.data, this);
+
             this.countries.createTable();
             this.countries.createButtons();
 
-            this.statistic = new StatisticTable(this.data);
+            
             
             this.statistic.setRegion();
             this.statistic.createTable();

@@ -1,7 +1,7 @@
 export function fullScreenButton() {
   const button = document.createElement("div");
   const i = document.createElement("i");
-  i.classList.add("bi", "bi-fullscreen");
+  i.classList.add('bi', 'bi-fullscreen', 'pointer');
   i.style = "font-size: 2rem; color: #fff;";
   button.append(i);
   button.addEventListener("click", () => {
@@ -11,6 +11,16 @@ export function fullScreenButton() {
 
   return button;
 }
+
+export function globe() {
+    const button = document.createElement("div");
+    const img = document.createElement("img");
+    img.src = 'img/globe2.svg';
+    button.append(img);
+    button.classList.add('pointer');
+
+    return button;
+  }
 
 export function buttonGroup(array) {
   let group = document.createElement("div");

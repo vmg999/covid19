@@ -3,7 +3,8 @@ import { addDigitSeparator } from './functions.js';
 import { getCountryPopulationR100k } from './api_data.js';
 
 export default class CountriesTable {
-  constructor(data) {
+  constructor(data, parent) {
+    this.parent = parent;
     this.data = data;
     this.countries = data.Countries;
     this.sortCountries("TotalConfirmed");
@@ -59,7 +60,7 @@ export default class CountriesTable {
 
       const flag = row.insertCell(0);
       const country = row.insertCell(1);
-      country.classList.add('cell');
+      country.classList.add('pointer');
       const total = row.insertCell(2);
 
       country.addEventListener('click', (e) => {
@@ -68,6 +69,10 @@ export default class CountriesTable {
         divider.then((result)=>{
             console.log(country);
             console.log(result);
+            // this.parent.statistic.state.region = country;
+            this.parent.statistic.state.divide100k = result;
+            this.parent.statistic.setRegion(country);
+            this.parent.statistic.createTable();
         })
       })
 

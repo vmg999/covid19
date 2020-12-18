@@ -1,4 +1,4 @@
-import { fullScreenButton, buttonGroup } from "./buttons.js";
+import { fullScreenButton, buttonGroup, globe } from "./buttons.js";
 import { addDigitSeparator } from './functions.js';
 
 const EarthPopulationR100k = 78270;
@@ -16,6 +16,7 @@ export default class StatisticTable {
       region: 'Global',
       period: 'Total',
       stat: 'Absolute',
+      divide100k: null,
     };
 
     this.init();
@@ -47,17 +48,26 @@ export default class StatisticTable {
   }
 
   setRegion(region = "Global") {
+    this.elements.region.innerHTML = '';
     let reg = document.createElement("h2");
     reg.textContent = region;
+    this.state.region = region;
 
     if (region == "Global") {
       this.elements.region.append(reg);
     } else {
+      const country_code = this.findCountry(region).CountryCode;
       const img = document.createElement("img");
-      img.src = `https://www.countryflags.io/${region}/flat/16.png`;
+      const globe_button = globe();
+      globe_button.addEventListener('click', () => {
+          this.setRegion('Global');
+          this.createTable();
+      })
+      img.src = `https://www.countryflags.io/${country_code}/flat/32.png`;
       this.elements.region.innerHTML = '';
       this.elements.region.append(img);
       this.elements.region.append(reg);
+      this.elements.region.append(globe_button);
     }
   }
 
@@ -100,6 +110,26 @@ export default class StatisticTable {
         cell2.innerText = await addDigitSeparator(Math.ceil(this.data.Global.NewConfirmed / EarthPopulationR100k));
         cell4.innerText = await addDigitSeparator(Math.ceil(this.data.Global.NewDeaths / EarthPopulationR100k));
         cell6.innerText = await addDigitSeparator(Math.ceil(this.data.Global.NewRecovered / EarthPopulationR100k));
+    } else if (this.state.region !== 'Global' && this.state.period == 'Total' && this.state.stat == 'Absolute') {
+        let data = this.findCountry(this.state.region);
+        cell2.innerText = addDigitSeparator(data.TotalConfirmed);
+        cell4.innerText = addDigitSeparator(data.TotalDeaths);
+        cell6.innerText = addDigitSeparator(data.TotalRecovered);
+    } else if (this.state.region !== 'Global' && this.state.period == 'Today' && this.state.stat == 'Absolute') {
+        let data = this.findCountry(this.state.region);
+        cell2.innerText = addDigitSeparator(data.NewConfirmed);
+        cell4.innerText = addDigitSeparator(data.NewDeaths);
+        cell6.innerText = addDigitSeparator(data.NewRecovered);
+    } else if (this.state.region !== 'Global' && this.state.period == 'Total' && this.state.stat == 'By 100k') {
+        let data = this.findCountry(this.state.region);
+        cell2.innerText = addDigitSeparator(Math.ceil(data.TotalConfirmed / this.state.divide100k));
+        cell4.innerText = addDigitSeparator(Math.ceil(data.TotalDeaths / this.state.divide100k));
+        cell6.innerText = addDigitSeparator(Math.ceil(data.TotalRecovered / this.state.divide100k));
+    } else if (this.state.region !== 'Global' && this.state.period == 'Today' && this.state.stat == 'By 100k') {
+        let data = this.findCountry(this.state.region);
+        cell2.innerText = addDigitSeparator(Math.ceil(data.NewConfirmed / this.state.divide100k));
+        cell4.innerText = addDigitSeparator(Math.ceil(data.NewDeaths / this.state.divide100k));
+        cell6.innerText =  addDigitSeparator(Math.ceil(data.NewRecovered / this.state.divide100k));
     }
 
 
@@ -107,6 +137,16 @@ export default class StatisticTable {
     this.elements.table.innerHTML = '';
     this.elements.table.append(table);
 
+  }
+
+  findCountry(country) {
+    let res;
+    this.data.Countries.forEach((el) => {
+        if (el.Country == country) {
+            res = el;
+        }
+    })
+    return res;
   }
 
   createButtons (){
