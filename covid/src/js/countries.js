@@ -1,4 +1,6 @@
 import { fullScreenButton, buttonGroup } from "./buttons.js";
+import { addDigitSeparator } from './functions.js';
+import { getCountryPopulationR100k } from './api_data.js';
 
 export default class CountriesTable {
   constructor(data) {
@@ -57,14 +59,24 @@ export default class CountriesTable {
 
       const flag = row.insertCell(0);
       const country = row.insertCell(1);
+      country.classList.add('cell');
       const total = row.insertCell(2);
+
+      country.addEventListener('click', (e) => {
+        let country = e.target.textContent
+        let divider = getCountryPopulationR100k(country);
+        divider.then((result)=>{
+            console.log(country);
+            console.log(result);
+        })
+      })
 
       const img = document.createElement("img");
       img.src = `https://www.countryflags.io/${el.CountryCode}/flat/16.png`;
 
       flag.append(img);
       country.textContent = el.Country;
-      total.textContent = el.TotalConfirmed;
+      total.textContent = addDigitSeparator(el[value.split(' ').join('')]);
     });
 
     tableDiv.innerHTML='';
@@ -94,8 +106,6 @@ export default class CountriesTable {
   addEvents(e) {
     let stat = e.target.id.split(' ').join('');
     if (stat !== this.currentStat) {
-        console.log(stat)
-        console.log(this)
         this.sortCountries(stat);
         this.createTable(e.target.id);
     }

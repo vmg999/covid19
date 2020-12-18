@@ -16,13 +16,13 @@ export function buttonGroup(array) {
   let group = document.createElement("div");
   group.classList.add('btn-group', 'statistic_buttons');
   group.setAttribute("role", "group");
-  group.setAttribute('aria-label', "Basic radio toggle button group");
+  group.setAttribute('aria-label', `${array.toString()}`);
 
   array.forEach((element, key) => {
     let input = document.createElement("input");
     input.classList.add("btn-check");
     input.setAttribute("type", "radio");
-    input.setAttribute("name", "btnradio");
+    input.setAttribute("name", `btnradio-${array.toString()}`);
     input.setAttribute("autocomplete", "off");
     if(key === 0) {
     input.setAttribute("checked", "checked");
