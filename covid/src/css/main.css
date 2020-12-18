@@ -212,7 +212,7 @@ footer {
 }
 
 .footer-info {
-  width: 10vw;
+  width: 11vw;
   height: 4vh;
   color: var(--txtcolor);
   display: flex;
@@ -228,7 +228,7 @@ footer {
 
 #github {
   height: 4vh;
-  width: 5vh;
+  width: 8vh;
   background-image: url("../img/github.png");
   background-size: contain;
   background-repeat: no-repeat;

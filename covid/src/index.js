@@ -5,42 +5,64 @@ import CountriesTable from './js/countries.js';
 import StatisticTable from './js/statistic.js';
 import { addDigitSeparator } from './js/functions.js';
 
-async function showTotal(data) {
-    const total = document.getElementById('total');
-    if (data !== 'error') {
-    total.textContent = await addDigitSeparator(data.Global.TotalConfirmed);
-    } else {
-        total.textContent = 'Data unavailable';
-    }
-}
-
-async function showDate(data) {
-    let actual_date = document.getElementById('actual_date');
-    const date = await new Date(data.Date);
-    actual_date.textContent = `Data actual on: ${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}  ${date.getHours()}:${date.getMinutes()}`;
-}
-
-async function createApp() {
-    try {
-        let data = await getData();
-
-        // let population = await getCountryPopulationR100k("Afghanistan");
-
-        showTotal(data);
-        let countries = new CountriesTable(data);
-        let statistic = new StatisticTable(data);
-        
-        countries.createTable();
-        countries.createButtons();
-        showDate(data);
-        
-        statistic.setRegion();
-        statistic.createTable();
-        statistic.createButtons();
-    } catch (e){
-        showTotal('error');
+class Dashboard {
+    constructor () {
+        this.data = null;
+        this.elements = {
+            global_cases: null,
+            country_cases: null,
+            map: null,
+            statistic_table: null,
+            chart: null,
+            actual_date: null,
+        };
+        this.countries = null;
+        this.statistic = null;
     }
 
-};
+    async init() {
+        this.elements.global_cases = document.getElementById('total');
+        this.elements.actual_date = document.getElementById('actual_date');
 
-createApp();
+        this.data = await getData();
+    }
+
+
+    async showTotal(data) {
+        if (data !== 'error') {
+            this.elements.global_cases.textContent = await addDigitSeparator(data.Global.TotalConfirmed);
+        } else {
+            this.elements.global_cases.textContent = 'Data unavailable';
+        }
+    }
+
+    async showDate(data) {
+        const date = await new Date(data.Date);
+        this.elements.actual_date.textContent = `Data actual on: ${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}  ${date.getHours()}:${date.getMinutes()}`;
+    }
+
+    async buildApp() {
+        await this.init();
+        try {
+            this.showTotal(this.data);
+            this.showDate(this.data);
+
+            this.countries = new CountriesTable(this.data);
+            this.countries.createTable();
+            this.countries.createButtons();
+
+            this.statistic = new StatisticTable(this.data);
+            
+            this.statistic.setRegion();
+            this.statistic.createTable();
+            this.statistic.createButtons();
+        } catch (e){
+            this.showTotal('error');
+        }
+    }
+    
+}
+
+
+let dashboard = new Dashboard();
+dashboard.buildApp();
