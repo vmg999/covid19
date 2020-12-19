@@ -77,13 +77,8 @@ header h1 {
   color: var(--red);
 }
 
-#map {
-  flex: 4 0 auto;
-  height: auto;
-}
-
 #right {
-  flex: 2 0 auto;
+  flex: 1 0 20vw;
   height: auto;
 }
 .column {
@@ -137,10 +132,15 @@ header h1 {
   bottom: 5vh;
   right: 0;
   overflow-y: scroll;
-  z-index: 5;
+  z-index: 1111;
 }
 
 .pointer:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.cell:hover {
   cursor: pointer;
 }
 #country_table::-webkit-scrollbar {
@@ -194,6 +194,24 @@ header h1 {
   margin-bottom: 1rem;
 }
 
+/* ----- map ----- */
+#map {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.map {
+  flex: 6 0 20vw;
+  height: auto;
+  position: relative;
+}
+
+#leafmap {
+  width: 97%;
+  height: 97%;
+}
+/* ----- chart ----- */
 #chart {
   flex: 3;
 }
@@ -248,10 +266,11 @@ footer {
   position: absolute;
   right: 1rem;
   top: 0;
+  z-index: 1110;
 }
 
 .statistic_buttons {
-  width: 70%;
+  width: 80%;
   height: 2.5rem;
   padding: 0 1rem;
 }

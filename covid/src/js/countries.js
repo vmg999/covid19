@@ -60,7 +60,7 @@ export default class CountriesTable {
 
       const flag = row.insertCell(0);
       const country = row.insertCell(1);
-      country.classList.add('pointer');
+      country.classList.add('cell');
       const total = row.insertCell(2);
 
       country.addEventListener('click', (e) => {

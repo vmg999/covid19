@@ -4,6 +4,7 @@ import getData, {getCountryPopulationR100k} from './js/api_data.js';
 import CountriesTable from './js/countries.js';
 import StatisticTable from './js/statistic.js';
 import { addDigitSeparator } from './js/functions.js';
+import Map from './js/map.js';
 
 class Dashboard {
     constructor () {
@@ -18,6 +19,7 @@ class Dashboard {
         };
         this.countries = null;
         this.statistic = null;
+        this.map = null;
     }
 
     async init() {
@@ -53,11 +55,13 @@ class Dashboard {
             this.countries.createTable();
             this.countries.createButtons();
 
-            
-            
             this.statistic.setRegion();
             this.statistic.createTable();
             this.statistic.createButtons();
+
+            this.map = new Map();
+            this.map.createButtons();
+            this.map.createMap();
         } catch (e){
             this.showTotal('error');
         }

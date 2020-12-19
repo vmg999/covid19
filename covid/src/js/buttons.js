@@ -1,7 +1,8 @@
 export function fullScreenButton() {
   const button = document.createElement("div");
+  button.classList.add('pointer');
   const i = document.createElement("i");
-  i.classList.add('bi', 'bi-fullscreen', 'pointer');
+  i.classList.add('bi', 'bi-fullscreen');
   i.style = "font-size: 2rem; color: #fff;";
   button.append(i);
   button.addEventListener("click", () => {
