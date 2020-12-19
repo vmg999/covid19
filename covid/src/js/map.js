@@ -2,8 +2,7 @@ import { fullScreenButton } from "./buttons.js";
 // import 'leaflet.css';
 import L from "./leaflet.js";
 
-const Token = "pk.eyJ1Ijoidm1nOTk5IiwiYSI6ImNraXVxYnl6MTBjOTUyem1ldmx2OXQwdDUifQ.eiHwwB-9ggow3ZaVrR7lyQ";
-const Token2 = 'pk.eyJ1Ijoidm1nOTk5IiwiYSI6ImNraXVxYTRuaTMyanUyeXFqdWI5aGFzcnEifQ.0GI3zMsWmnz6X--jidn8ew';
+const Token = 'pk.eyJ1Ijoidm1nOTk5IiwiYSI6ImNraXVxYTRuaTMyanUyeXFqdWI5aGFzcnEifQ.0GI3zMsWmnz6X--jidn8ew';
 
 export default class Map {
   constructor() {
@@ -35,15 +34,13 @@ export default class Map {
         attribution:
           'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         maxZoom: 18,
-        // id: "mapbox/streets-v11",
         id: 'vmg999/ckiuycxdj1bkf19o7akd3jj4j',
         tileSize: 512,
         zoomOffset: -1,
-        accessToken: Token2,
+        accessToken: Token,
       }
     ).addTo(this.leafmap);
 
-    L.geoJson(boundaries).addTo(this.leafmap);
 
   }
 }
