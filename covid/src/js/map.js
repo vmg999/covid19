@@ -85,6 +85,7 @@ export default class Map {
           let updatedFormatted;
           let casesString;
           let color;
+          let size;
       
           const {
             Country,
@@ -103,31 +104,38 @@ export default class Map {
           }
       
           if ( update ) {
-            updatedFormatted = new Date(update).toLocaleString();
+            let date = new Date(update);
+            updatedFormatted = `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
           }
 
           if (TotalConfirmed < 1000) {
-              color = '#FFEDA0';
+             color = '#FFEDA0';
+             size = '2.4em';
           } else if (TotalConfirmed >= 1000 && TotalConfirmed <10000) {
              color = '#FED976'
+             size = '2.8em';
           } else if (TotalConfirmed >= 10000 && TotalConfirmed <100000) {
              color = '#FD8D3C';
+             size = '3em';
           } else if (TotalConfirmed >= 100000 && TotalConfirmed <1000000) {
              color = '#FC4E2A';
+             size = '3.3em';
           } else if (TotalConfirmed >= 1000000 && TotalConfirmed <10000000) {
              color = '#E31A1C';
+             size = '4em';
           } else if (TotalConfirmed >= 10000000) {
             color = '#f00';
+            size = '4.5em';
           }
        
           const span = `
               <span class="icon-marker-tooltip">
                 <h2>${Country}</h2>
                 <ul>
-                  <li><strong>Confirmed:</strong> ${addDigitSeparator(TotalConfirmed)}</li>
-                  <li><strong>Deaths:</strong> ${addDigitSeparator(TotalDeaths)}</li>
-                  <li><strong>Recovered:</strong> ${addDigitSeparator(TotalRecovered)}</li>
-                  <li><strong>Last Update:</strong> ${updatedFormatted}</li>
+                  <li>Confirmed: ${addDigitSeparator(TotalConfirmed)}</li>
+                  <li>Deaths: ${addDigitSeparator(TotalDeaths)}</li>
+                  <li>Recovered: ${addDigitSeparator(TotalRecovered)}</li>
+                  <li>Last Update: ${updatedFormatted}</li>
                 </ul>
               </span>
               ${ casesString }
@@ -136,6 +144,8 @@ export default class Map {
           let html = document.createElement('span');
           html.classList.add('icon-marker');
           html.style.backgroundColor = color;
+          html.style.width = size;
+          html.style.height = size;
           html.innerHTML = span;
 
       
