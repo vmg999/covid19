@@ -63,6 +63,7 @@ class Dashboard {
             this.map.createButtons();
             this.map.createMap();
             this.map.createDataLayer();
+            this.map.createLegend();
         } catch (e){
             this.showTotal('error');
         }
