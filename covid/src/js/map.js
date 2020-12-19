@@ -1,13 +1,19 @@
 import { fullScreenButton } from "./buttons.js";
 // import 'leaflet.css';
 import L from "./leaflet.js";
+import countryCoordinates from './country_coordinates.json';
+import { addDigitSeparator } from './functions.js';
 
 const Token = 'pk.eyJ1Ijoidm1nOTk5IiwiYSI6ImNraXVxYTRuaTMyanUyeXFqdWI5aGFzcnEifQ.0GI3zMsWmnz6X--jidn8ew';
 
 export default class Map {
-  constructor() {
+  constructor(data, parent) {
+    this.data = data;
+    this.parent = parent;
     this.map = document.getElementById("map");
-    this.container = null;
+    this.container = document.createElement("div");
+    this.container.setAttribute("id", "leafmap");
+    this.map.append(this.container);
     this.leafmap = null;
   }
 
@@ -22,17 +28,11 @@ export default class Map {
   }
 
   createMap() {
-    this.container = document.createElement("div");
-    this.container.setAttribute("id", "leafmap");
-    this.map.append(this.container);
-
     this.leafmap = L.map("leafmap").setView([38.4, -8.1], 2);
 
     L.tileLayer(
       "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
       {
-        attribution:
-          'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         maxZoom: 18,
         id: 'vmg999/ckiuycxdj1bkf19o7akd3jj4j',
         tileSize: 512,
@@ -40,7 +40,116 @@ export default class Map {
         accessToken: Token,
       }
     ).addTo(this.leafmap);
-
-
   }
+
+  getCooordinates(country) {
+    let coordinates;
+    for (let i = 0; i < countryCoordinates.length; i += 1) {
+        if (countryCoordinates[i].country == country) {
+            coordinates = countryCoordinates[i];
+            break;
+        } else {
+            coordinates = {
+                Lat: 0,
+                Lon: 0,
+            }
+        }
+    }
+    return coordinates;
+  }
+
+  async createDataLayer() {
+    let data = await this.data.Countries;
+
+    const geoJson = {
+        type: 'FeatureCollection',
+        features: data.map((country = {}) => {
+          const coordinates = this.getCooordinates(country.Country);
+          const {Lat, Lon } = coordinates;
+          return {
+            type: 'Feature',
+            properties: {
+             ...country,
+            },
+            geometry: {
+              type: 'Point',
+              coordinates: [ Lon, Lat ]
+            }
+          }
+        })
+      }
+
+      const geoJsonLayers = new L.GeoJSON(geoJson, {
+        pointToLayer: (feature = {}, latlng) => {
+          const { properties = {} } = feature;
+          let updatedFormatted;
+          let casesString;
+          let color;
+      
+          const {
+            Country,
+            TotalConfirmed,
+            TotalDeaths,
+            TotalRecovered
+          } = properties;
+          const update = properties.Date;
+      
+          casesString = `${TotalConfirmed}`;
+      
+          if ( TotalConfirmed > 1000 && TotalConfirmed < 1000000 ) {
+            casesString = `${casesString.slice(0, -3)}k+`
+          } else if ( TotalConfirmed >= 1000000 ) {
+            casesString = `${casesString.slice(0, -6)}M+`
+          }
+      
+          if ( update ) {
+            updatedFormatted = new Date(update).toLocaleString();
+          }
+
+          if (TotalConfirmed < 1000) {
+              color = '#FFEDA0';
+          } else if (TotalConfirmed >= 1000 && TotalConfirmed <10000) {
+             color = '#FED976'
+          } else if (TotalConfirmed >= 10000 && TotalConfirmed <100000) {
+             color = '#FD8D3C';
+          } else if (TotalConfirmed >= 100000 && TotalConfirmed <1000000) {
+             color = '#FC4E2A';
+          } else if (TotalConfirmed >= 1000000 && TotalConfirmed <10000000) {
+             color = '#E31A1C';
+          } else if (TotalConfirmed >= 10000000) {
+            color = '#f00';
+          }
+       
+          const span = `
+              <span class="icon-marker-tooltip">
+                <h2>${Country}</h2>
+                <ul>
+                  <li><strong>Confirmed:</strong> ${addDigitSeparator(TotalConfirmed)}</li>
+                  <li><strong>Deaths:</strong> ${addDigitSeparator(TotalDeaths)}</li>
+                  <li><strong>Recovered:</strong> ${addDigitSeparator(TotalRecovered)}</li>
+                  <li><strong>Last Update:</strong> ${updatedFormatted}</li>
+                </ul>
+              </span>
+              ${ casesString }
+          `;
+
+          let html = document.createElement('span');
+          html.classList.add('icon-marker');
+          html.style.backgroundColor = color;
+          html.innerHTML = span;
+
+      
+          return L.marker( latlng, {
+            icon: L.divIcon({
+              className: 'icon',
+              html
+            }),
+            riseOnHover: true
+          });
+        }
+      });
+
+      await geoJsonLayers.addTo(this.leafmap);
+  }
+
 }

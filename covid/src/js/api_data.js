@@ -4,6 +4,12 @@ export default async function getData() {
     return resp;
 }
 
+export async function getDataByCountry(country) {
+    let response = await fetch(`https://api.covid19api.com/dayone/country/${country}`, {mode: "cors"})
+    let resp = await response.json();
+    return resp;
+}
+
 async function getCountriesPopulation() {
     let response = await fetch('https://restcountries.eu/rest/v2/all?fields=name;population', {mode: "cors"})
     let resp = await response.json();

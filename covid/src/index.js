@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import getData, {getCountryPopulationR100k} from './js/api_data.js';
+import getData, {getDataByCountry, getCountryPopulationR100k} from './js/api_data.js';
 import CountriesTable from './js/countries.js';
 import StatisticTable from './js/statistic.js';
 import { addDigitSeparator } from './js/functions.js';
@@ -59,9 +59,10 @@ class Dashboard {
             this.statistic.createTable();
             this.statistic.createButtons();
 
-            this.map = new Map();
+            this.map = new Map(this.data, this);
             this.map.createButtons();
             this.map.createMap();
+            this.map.createDataLayer();
         } catch (e){
             this.showTotal('error');
         }
