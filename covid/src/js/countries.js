@@ -67,9 +67,6 @@ export default class CountriesTable {
         let country = e.target.textContent
         let divider = getCountryPopulationR100k(country);
         divider.then((result)=>{
-            console.log(country);
-            console.log(result);
-            // this.parent.statistic.state.region = country;
             this.parent.statistic.state.divide100k = result;
             this.parent.statistic.setRegion(country);
             this.parent.statistic.createTable();
