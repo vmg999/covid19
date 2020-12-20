@@ -92,6 +92,14 @@ header h1 {
 }
 
 /* ---- country_table ---- */
+#search {
+    width: 65%;
+    max-width: 30rem;
+}
+.hide {
+    display: none;
+}
+
 #country_cases_head {
   text-align: center;
 }

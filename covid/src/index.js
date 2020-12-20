@@ -54,6 +54,7 @@ class Dashboard {
 
             this.countries.createTable();
             this.countries.createButtons();
+            // this.countries.createSearch();
 
             this.statistic.setRegion();
             this.statistic.createTable();

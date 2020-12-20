@@ -10,11 +10,40 @@ export default class CountriesTable {
     this.sortCountries("TotalConfirmed");
     this.id = "country_cases";
     this.table_id = "country_table";
-    this.table = {
-      table: null,
-      thead: null,
-    },
-    this.currentStat = null
+    this.table =  null;
+    this.currentStat = null;
+    this.search_id = 'search';
+    this.search = null;
+  }
+
+  async createSearch() {
+    this.search = document.createElement('input');
+    this.search.classList.add('form-control');
+    this.search.setAttribute('type', 'text');
+    this.search.setAttribute('placeholder', 'country');
+
+    let table = document.querySelectorAll('.table-row');
+
+    this.search.addEventListener('input', (e) => {
+        if (e.target.value !== '') {
+            table.forEach((el) => {
+                el.classList.remove('hide');
+            })
+            let re = new RegExp(`${e.target.value}`, 'i');
+            table.forEach((el) => {
+                if (el.childNodes[1].innerText.search(re) == -1) {
+                    el.classList.add('hide');
+                }
+            })
+        } else {
+            table.forEach((el) => {
+                el.classList.remove('hide');
+            })
+        }
+    })
+
+    document.getElementById(this.search_id).innerHTML = '';
+    document.getElementById(this.search_id).append(this.search);
   }
 
   async sortCountries(order) {
@@ -32,9 +61,9 @@ export default class CountriesTable {
 
   async createTable(value = "Total Confirmed") {
     let tableDiv = document.getElementById(this.table_id);
-    let { table } = this.table;
-    table = document.createElement("table");
-    table.classList.add("table", "table-dark", "table-hover");
+    // let { table } = this.table;
+    this.table = document.createElement("table");
+    this.table.classList.add("table", "table-dark", "table-hover");
     const thead = document.createElement("thead");
     const th1 = document.createElement("th");
     const th2 = document.createElement("th");
@@ -53,10 +82,11 @@ export default class CountriesTable {
     thead.append(th2);
     thead.append(th3);
 
-    table.append(thead);
+    this.table.append(thead);
 
     await this.countries.forEach((el, key) => {
-      const row = table.insertRow(key);
+      const row = this.table.insertRow(key);
+      row.classList.add('table-row');
 
       const flag = row.insertCell(0);
       const country = row.insertCell(1);
@@ -81,8 +111,10 @@ export default class CountriesTable {
       total.textContent = addDigitSeparator(el[value.split(' ').join('')]);
     });
 
+
     tableDiv.innerHTML='';
-    await tableDiv.append(table);
+    tableDiv.append(this.table);
+    await this.createSearch();
   }
 
   createButtons() {
