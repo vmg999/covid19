@@ -30,7 +30,7 @@ export default class Map {
   }
 
   createMap() {
-    this.leafmap = L.map("leafmap").setView([38.4, -8.1], 2);
+    this.leafmap = L.map("leafmap").setView([25, 20], 2);
 
     L.tileLayer(
       "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",

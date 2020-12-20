@@ -61,7 +61,6 @@ export default class CountriesTable {
 
   async createTable(value = "Total Confirmed") {
     let tableDiv = document.getElementById(this.table_id);
-    // let { table } = this.table;
     this.table = document.createElement("table");
     this.table.classList.add("table", "table-dark", "table-hover");
     const thead = document.createElement("thead");
@@ -73,8 +72,10 @@ export default class CountriesTable {
     th3.textContent = value;
     th1.setAttribute("scope", "col");
     th1.classList.add('table_head');
+    th1.style = "width: 10%";
     th2.setAttribute("scope", "col");
     th2.classList.add('table_head');
+    th2.style = "width: 55%";
     th3.setAttribute("scope", "col");
     th3.classList.add('table_head');
 
