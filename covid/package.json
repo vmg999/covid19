@@ -13,6 +13,7 @@
   "devDependencies": {
     "bootstrap": "^5.0.0-beta1",
     "bootstrap-icons": "^1.2.1",
+    "chart.js": "^2.9.4",
     "copy-webpack-plugin": "^6.3.2",
     "css-loader": "^5.0.1",
     "eslint": "^7.15.0",

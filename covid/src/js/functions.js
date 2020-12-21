@@ -26,3 +26,7 @@ export function sliceZeros(num) {
 
   return casesString;
 }
+
+export function addZero(num) {
+  return (parseInt(num, 10) < 10 ? '0' : '') + num;
+}

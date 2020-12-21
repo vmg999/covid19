@@ -3,8 +3,9 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import getData, {getDataByCountry, getCountryPopulationR100k} from './js/api_data.js';
 import CountriesTable from './js/countries.js';
 import StatisticTable from './js/statistic.js';
-import { addDigitSeparator } from './js/functions.js';
+import { addDigitSeparator, addZero } from './js/functions.js';
 import Map from './js/map.js';
+import dataChart from './js/chart.js';
 
 class Dashboard {
     constructor () {
@@ -20,6 +21,7 @@ class Dashboard {
         this.countries = null;
         this.statistic = null;
         this.map = null;
+        this.chart = null;
     }
 
     async init() {
@@ -40,7 +42,7 @@ class Dashboard {
 
     async showDate(data) {
         const date = await new Date(data.Date);
-        this.elements.actual_date.textContent = `Data actual on: ${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}  ${date.getHours()}:${date.getMinutes()}`;
+        this.elements.actual_date.textContent = `Data actual on: ${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}  ${date.getHours()}:${addZero(date.getMinutes())}`;
     }
 
     async buildApp() {
@@ -65,6 +67,9 @@ class Dashboard {
             this.map.createMap();
             this.map.createDataLayer();
             this.map.createLegend();
+
+            this.chart = new dataChart();
+            this.chart.worldTotal();
         } catch (e){
             this.showTotal('error');
         }

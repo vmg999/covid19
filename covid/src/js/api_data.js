@@ -5,7 +5,13 @@ export default async function getData() {
 }
 
 export async function getDataByCountry(country) {
-    let response = await fetch(`https://api.covid19api.com/dayone/country/${country}`, {mode: "cors"})
+    let response = await fetch(`https://api.covid19api.com/total/country/${country}`, {mode: "cors"})
+    let resp = await response.json();
+    return resp;
+}
+
+export async function getWorldTotal() {
+    let response = await fetch(`https://covid19-api.org/api/timeline`, {mode: "cors"})
     let resp = await response.json();
     return resp;
 }

@@ -143,6 +143,7 @@ export default class CountriesTable {
     if (stat !== this.currentStat) {
         this.sortCountries(stat);
         this.createTable(e.target.id);
+        this.parent.chart.worldTotal(stat);
     }
   }
 
