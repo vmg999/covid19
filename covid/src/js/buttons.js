@@ -52,3 +52,23 @@ export function buttonGroup(array) {
   
   return group;
 }
+
+export function keyboardButton() {
+  const button = document.createElement("div");
+  const img = document.createElement("img");
+  img.src = 'img/keyboard.svg';
+  button.append(img);
+  button.classList.add('pointer', 'use-keyboard-input');
+
+  return button;
+}
+
+export function resetInput() {
+  const button = document.createElement("div");
+  const img = document.createElement("img");
+  img.src = 'img/x-square.svg';
+  button.append(img);
+  button.classList.add('pointer');
+
+  return button;
+}

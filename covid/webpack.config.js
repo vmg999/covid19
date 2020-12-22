@@ -43,6 +43,10 @@ module.exports = {
           from: "./src/css",
           to: "./css",
         },
+        {
+            from: "./src/audio",
+            to: "./audio",
+        },
       ],
     }),
   ],

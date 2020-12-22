@@ -6,6 +6,7 @@ import StatisticTable from './js/statistic.js';
 import { addDigitSeparator, addZero } from './js/functions.js';
 import Map from './js/map.js';
 import dataChart from './js/chart.js';
+import Keyboard from './js/keyboard.js';
 
 class Dashboard {
     constructor () {
@@ -22,6 +23,7 @@ class Dashboard {
         this.statistic = null;
         this.map = null;
         this.chart = null;
+        this.keyboard = null;
     }
 
     async init() {
@@ -69,6 +71,8 @@ class Dashboard {
 
             this.chart = new dataChart();
             this.chart.worldTotal();
+
+            this.keyboard = new Keyboard(this);
         } catch (e){
             this.showTotal('error');
         }

@@ -1,9 +1,10 @@
-import { fullScreenButton, buttonGroup } from "./buttons.js";
+import { fullScreenButton, buttonGroup, keyboardButton, resetInput } from "./buttons.js";
 import { addDigitSeparator } from './functions.js';
 import { getCountryPopulationR100k } from './api_data.js';
 
 export default class CountriesTable {
   constructor(data, parent) {
+    this.block = document.getElementById('search');
     this.parent = parent;
     this.data = data;
     this.countries = data.Countries;
@@ -13,15 +14,20 @@ export default class CountriesTable {
     this.table =  null;
     this.currentStat = 'TotalConfirmed';
     this.currentCountry = null;
-    this.search_id = 'search';
     this.search = null;
+    this.keyboardButton = keyboardButton();
+    this.resetInput = resetInput();
   }
 
   async createSearch() {
     this.search = document.createElement('input');
-    this.search.classList.add('form-control');
+    this.search.classList.add('form-control', 'search');
     this.search.setAttribute('type', 'text');
     this.search.setAttribute('placeholder', 'country');
+    let event = new Event('input', {
+      bubbles: true,
+      cancelable: true,
+    });
 
     let table = document.querySelectorAll('.table-row');
 
@@ -43,8 +49,15 @@ export default class CountriesTable {
         }
     })
 
-    document.getElementById(this.search_id).innerHTML = '';
-    document.getElementById(this.search_id).append(this.search);
+    this.resetInput.addEventListener('click', () => {
+      this.search.value = '';
+      this.search.dispatchEvent(event);
+    })
+
+    this.block.innerHTML = '';
+    this.block.append(this.keyboardButton);
+    this.block.append(this.search);
+    this.block.append(this.resetInput);
   }
 
   async sortCountries(order) {

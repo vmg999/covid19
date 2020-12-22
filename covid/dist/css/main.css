@@ -93,8 +93,15 @@ header h1 {
 
 /* ---- country_table ---- */
 #search {
-  width: 65%;
-  max-width: 30rem;
+  width: 75%;
+  max-width: 40rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.search {
+    margin: 0 1rem; 
 }
 .hide {
   display: none;
