@@ -93,18 +93,37 @@ export default class CountriesTable {
       const flag = row.insertCell(0);
       const country = row.insertCell(1);
       country.classList.add('cell');
+      if (this.currentCountry === el.Country) {
+        row.setAttribute('id', 'active');
+      }
       const total = row.insertCell(2);
 
       country.addEventListener('click', (e) => {
-        let country = e.target.textContent
-        let divider = getCountryPopulationR100k(country);
-        divider.then((result)=>{
-            this.parent.statistic.state.divide100k = result;
-            this.parent.statistic.setRegion(country);
-            this.parent.statistic.createTable();
-        })
-        this.currentCountry = country;
-        this.parent.chart.countryCases(country, this.currentStat);
+        let curCountry = e.target.textContent
+        if (this.currentCountry !== curCountry) {
+          for (let row of this.table.rows) {
+            row.removeAttribute('id');
+          }
+          this.currentCountry = curCountry;
+          let divider = getCountryPopulationR100k(curCountry);
+          divider.then((result)=>{
+              this.parent.statistic.state.divide100k = result;
+              this.parent.statistic.setRegion(curCountry);
+              this.parent.statistic.createTable();
+          })
+          
+          this.parent.chart.countryCases(curCountry, this.currentStat);
+  
+          row.setAttribute('id', 'active');
+        } else if (this.currentCountry === curCountry) {
+          this.currentCountry = "Global";
+          this.parent.statistic.setRegion("Global");
+          this.parent.statistic.createTable();
+          this.parent.chart.worldTotal(this.currentStat);
+
+          row.removeAttribute('id');
+        }
+
       })
 
       const img = document.createElement("img");

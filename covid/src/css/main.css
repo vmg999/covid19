@@ -99,6 +99,12 @@ header h1 {
 .hide {
   display: none;
 }
+#active, #active:hover {
+  border: solid 2px #fd8d3c;
+}
+#active td {
+  background-color: #fd8d3c !important;
+}
 
 #country_cases_head {
   text-align: center;
@@ -171,15 +177,15 @@ header h1 {
 }
 
 .statistic_table_full {
-    color: var(--txtcolor);
-    position: absolute;
-    top: 5vh;
-    left: 0;
-    bottom: 5vh;
-    right: 0;
-    overflow-y: scroll;
-    z-index: 1113;
-  }
+  color: var(--txtcolor);
+  position: absolute;
+  top: 5vh;
+  left: 0;
+  bottom: 5vh;
+  right: 0;
+  overflow-y: scroll;
+  z-index: 1113;
+}
 
 .statistic_table {
   flex: 2;
@@ -319,12 +325,12 @@ header h1 {
   position: relative;
 }
 .chart-container {
-    position: relative;
-    margin: auto;
-    height: 97%;
-    width: 97%;
-  }
-  
+  position: relative;
+  margin: auto;
+  height: 97%;
+  width: 97%;
+}
+
 #chart {
   width: 99%;
   height: 99%;
@@ -390,5 +396,5 @@ footer {
   padding: 0 1rem;
 }
 .firstplan {
-    z-index: 1112;
+  z-index: 1112;
 }

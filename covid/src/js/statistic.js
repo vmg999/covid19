@@ -63,7 +63,10 @@ export default class StatisticTable {
       globe_button.addEventListener('click', () => {
           this.setRegion('Global');
           this.createTable();
-          this.parent.countries.currentCountry = null;
+          this.parent.countries.currentCountry = 'Global';
+          for (let row of this.parent.countries.table.rows) {
+            row.removeAttribute('id');
+          }
           this.parent.chart.worldTotal(this.parent.countries.currentStat);
       })
       img.src = `https://www.countryflags.io/${country_code}/flat/32.png`;
