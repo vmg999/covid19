@@ -167,7 +167,7 @@ export default class CountriesTable {
         this.currentStat = stat;
         this.sortCountries(stat);
         this.createTable(e.target.id);
-        if (this.currentCountry != null) {
+        if (this.currentCountry !== 'Global') {
           this.parent.chart.countryCases(this.currentCountry, stat);
         } else {
           this.parent.chart.worldTotal(stat);
