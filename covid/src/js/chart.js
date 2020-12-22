@@ -58,7 +58,6 @@ export default class dataChart {
         let color;
         let currentcase;
         let values = [];
-        let colors = [];
         let labels = [];
 
         if (cases === 'TotalConfirmed' || cases === "total_cases") {
@@ -77,7 +76,6 @@ export default class dataChart {
 
         await data.forEach(el => {
             values.push(el[currentcase]);
-            colors.push(color);
             let d = new Date(el.last_update)
             let ds = `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`;
             labels.push(ds);
@@ -87,7 +85,7 @@ export default class dataChart {
             datasets: [{
                 label: chart_label,
                 data: values.reverse(),
-                backgroundColor: colors,
+                backgroundColor: color,
             }]
         };
 
