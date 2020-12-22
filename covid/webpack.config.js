@@ -1,6 +1,27 @@
 var path = require("path");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-// var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+const cssLoaders = (...extra) => {
+    const loaders = [
+      {
+        loader: MiniCssExtractPlugin.loader,
+        options: {
+          publicPath: '',
+        },
+      },
+      {
+        loader: 'css-loader',
+        options: { url: false},
+      },
+    ]
+  
+    if (extra) {
+      loaders.push(...extra)
+    }
+  
+    return loaders
+  }
 
 module.exports = {
   entry: "./src/index.js",
@@ -12,7 +33,7 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"],
+        use: cssLoaders(),
       },
       {
         test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
@@ -40,14 +61,13 @@ module.exports = {
           to: "./img",
         },
         {
-          from: "./src/css",
-          to: "./css",
-        },
-        {
             from: "./src/audio",
             to: "./audio",
         },
       ],
     }),
+    new MiniCssExtractPlugin({
+        filename: "style.css",
+      }),
   ],
 };

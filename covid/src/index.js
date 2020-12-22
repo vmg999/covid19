@@ -1,5 +1,16 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import './css/keyboard.css';
+import './css/countrytable.css';
+import './css/statistictable.css';
+import './css/map.css';
+import './css/chart.css';
+import './css/footer.css';
+import './css/buttons.css';
+
+
+import './css/leaflet.css';
+import './css/main.css';
 import getData from './js/api_data.js';
 import CountriesTable from './js/countries.js';
 import StatisticTable from './js/statistic.js';

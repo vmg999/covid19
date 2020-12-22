@@ -1,0 +1,16 @@
+.chart_block {
+    flex: 3;
+    position: relative;
+  }
+  .chart-container {
+    position: relative;
+    margin: auto;
+    height: 97%;
+    width: 97%;
+  }
+  
+  #chart {
+    width: 99%;
+    height: 99%;
+  }
+  
