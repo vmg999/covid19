@@ -132,6 +132,7 @@ export default class CountriesTable {
     countries_div.append(full_screen_button);
 
     let statistic_buttons = buttonGroup(arr);
+    statistic_buttons.classList.add('firstplan');
     countries_div.append(statistic_buttons);
     arr.forEach((el) => {
         document.getElementById(el).addEventListener('click', this.addEvents.bind(this));

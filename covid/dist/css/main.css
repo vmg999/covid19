@@ -378,3 +378,6 @@ footer {
   height: 2.5rem;
   padding: 0 1rem;
 }
+.firstplan {
+    z-index: 1112;
+}

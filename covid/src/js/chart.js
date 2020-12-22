@@ -63,15 +63,15 @@ export default class dataChart {
 
         if (cases === 'TotalConfirmed' || cases === "total_cases") {
             currentcase = 'total_cases';
-            chart_label = 'Total Cases';
+            chart_label = 'Global Total Cases';
             color = '#FD8D3C';
         } else if (cases === 'TotalDeaths') {
             currentcase = 'total_deaths';
-            chart_label = 'Total Deaths';
+            chart_label = 'Global Total Deaths';
             color = 'rgba(255, 0, 0, 1)';
         } else if (cases === 'TotalRecovered') {
             currentcase = 'total_recovered';
-            chart_label = 'Total Recovered';
+            chart_label = 'Global Total Recovered';
             color = 'rgba(0, 255, 0, 1)';
         }
 
