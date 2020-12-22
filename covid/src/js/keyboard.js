@@ -31,25 +31,21 @@ export default class Keyboard {
   
     async init() {
       await this.parent;
-      // Create main elements
       this.elements.main = document.createElement("div");
       this.elements.keysContainer = document.createElement("div");
   
-      // Setup main elements
       this.elements.main.classList.add("keyboard", "keyboard--hidden");
       this.elements.keysContainer.classList.add("keyboard__keys");
       this.elements.keysContainer.appendChild(this._createKeys());
   
       this.elements.keys = this.elements.keysContainer.querySelectorAll(".keyboard__key");
   
-      // Add to DOM
       this.elements.main.appendChild(this.elements.keysContainer);
       document.body.appendChild(this.elements.main);
   
       this.elements.shift = document.querySelector(".shift");
       this.elements.en = document.getElementById("en");
       this.elements.ru = document.getElementById("ru");
-      // Automatically use keyboard for elements with .use-keyboard-input
 
       let event = new Event('input', {
         bubbles: true,
@@ -117,7 +113,6 @@ export default class Keyboard {
         "voice", "done","space","En/Ru","left","right", "vol"
       ];
 
-      // Creates keyboard backlight
       const keyCodeLayout = [
           192, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 189, 187, 8,
           81, 87, 69, 82, 84, 89, 85, 73, 79, 80, 219, 221, 220,
@@ -137,7 +132,6 @@ export default class Keyboard {
         });
      });
 
-      // Creates HTML for an icon
       const createIconHTML = (icon_name) => {
         return `<i class="material-icons">${icon_name}</i>`;
       };
@@ -146,7 +140,6 @@ export default class Keyboard {
         let keyElement = document.createElement("button");
         let insertLineBreak = ["backspace", "\\", "enter", "\/"].indexOf(key) !== -1;
   
-        // Add attributes/classes
         keyElement.setAttribute("type", "button");
         keyElement.classList.add("keyboard__key");
   
@@ -283,7 +276,7 @@ export default class Keyboard {
                 });
             break;
   
-          default:  // ---------------- main keys --------------------------------------------------
+          default:
             keyElement.textContent = key.toLowerCase();
             keyElement.defCase = key.toLocaleLowerCase();
 
@@ -321,7 +314,6 @@ export default class Keyboard {
           fragment.appendChild(document.createElement("br"));
         }
       });
-      //----audio element----
       const sounds = ["boom", "clap", "kick", "snare", "tink", "tom"];
       sounds.forEach(el=>{
         let audio = document.createElement("audio");
@@ -474,7 +466,6 @@ export default class Keyboard {
         }else if(this.properties.lang == "ru"){
             this.elements.recognition.lang = 'ru';
         }
-        
       
         this.elements.recognition.addEventListener('result', e => {
           const transcript = Array.from(e.results).map(result => result[0]).map(result => result.transcript).join('');

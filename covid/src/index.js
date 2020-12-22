@@ -1,24 +1,18 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import getData, {getDataByCountry, getCountryPopulationR100k} from './js/api_data.js';
+import getData from './js/api_data.js';
 import CountriesTable from './js/countries.js';
 import StatisticTable from './js/statistic.js';
 import { addDigitSeparator, addZero } from './js/functions.js';
 import Map from './js/map.js';
-import dataChart from './js/chart.js';
+import DataChart from './js/chart.js';
 import Keyboard from './js/keyboard.js';
 
 class Dashboard {
     constructor () {
         this.data = null;
-        this.elements = {
-            global_cases: null,
-            country_cases: null,
-            map: null,
-            statistic_table: null,
-            chart: null,
-            actual_date: null,
-        };
+        this.global_cases = null,
+        this.actual_date = null,
         this.countries = null;
         this.statistic = null;
         this.map = null;
@@ -27,24 +21,23 @@ class Dashboard {
     }
 
     async init() {
-        this.elements.global_cases = document.getElementById('total');
-        this.elements.actual_date = document.getElementById('actual_date');
+        this.global_cases = document.getElementById('total');
+        this.actual_date = document.getElementById('actual_date');
 
         this.data = await getData();
     }
 
-
     async showTotal(data) {
         if (data !== 'error') {
-            this.elements.global_cases.textContent = await addDigitSeparator(data.Global.TotalConfirmed);
+            this.global_cases.textContent = await addDigitSeparator(data.Global.TotalConfirmed);
         } else {
-            this.elements.global_cases.textContent = 'Data unavailable';
+            this.global_cases.textContent = 'Data unavailable';
         }
     }
 
     async showDate(data) {
         const date = await new Date(data.Date);
-        this.elements.actual_date.textContent = `Data actual on: ${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}  ${date.getHours()}:${addZero(date.getMinutes())}`;
+        this.actual_date.textContent = `Data actual on: ${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}  ${date.getHours()}:${addZero(date.getMinutes())}`;
     }
 
     async buildApp() {
@@ -69,7 +62,7 @@ class Dashboard {
             this.map.createDataLayer();
             this.map.createLegend();
 
-            this.chart = new dataChart();
+            this.chart = new DataChart();
             this.chart.worldTotal();
 
             this.keyboard = new Keyboard(this);
@@ -77,7 +70,6 @@ class Dashboard {
             this.showTotal('error');
         }
     }
-    
 }
 
 
