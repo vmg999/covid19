@@ -170,6 +170,17 @@ header h1 {
   align-items: center;
 }
 
+.statistic_table_full {
+    color: var(--txtcolor);
+    position: absolute;
+    top: 5vh;
+    left: 0;
+    bottom: 5vh;
+    right: 0;
+    overflow-y: scroll;
+    z-index: 1113;
+  }
+
 .statistic_table {
   flex: 2;
   position: relative;

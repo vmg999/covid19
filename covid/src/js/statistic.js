@@ -38,7 +38,7 @@ export default class StatisticTable {
     full_screen_button.classList.add("full_screen");
     full_screen_button.addEventListener("click", () => {
       block.classList.toggle("statistic_table");
-      block.classList.toggle("country_cases_full");
+      block.classList.toggle("statistic_table_full");
     });
 
     block.append(full_screen_button);
@@ -86,7 +86,7 @@ export default class StatisticTable {
     const cell5 = row3.insertCell(0);
     const cell6 = row3.insertCell(1);
 
-    cell2.style = 'color: yellow';
+    cell2.style = 'color: #FD8D3C';
     cell4.style = 'color: red';
     cell6.style = 'color: green';
 

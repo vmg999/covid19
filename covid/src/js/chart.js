@@ -72,7 +72,7 @@ export default class dataChart {
         } else if (cases === 'TotalRecovered') {
             currentcase = 'total_recovered';
             chart_label = 'Global Total Recovered';
-            color = 'rgba(0, 255, 0, 1)';
+            color = '#008000';
         }
 
         await data.forEach(el => {
