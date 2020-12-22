@@ -11,7 +11,8 @@ export default class CountriesTable {
     this.id = "country_cases";
     this.table_id = "country_table";
     this.table =  null;
-    this.currentStat = null;
+    this.currentStat = 'TotalConfirmed';
+    this.currentCountry = null;
     this.search_id = 'search';
     this.search = null;
   }
@@ -102,6 +103,8 @@ export default class CountriesTable {
             this.parent.statistic.setRegion(country);
             this.parent.statistic.createTable();
         })
+        this.currentCountry = country;
+        this.parent.chart.countryCases(country, this.currentStat);
       })
 
       const img = document.createElement("img");
@@ -142,9 +145,15 @@ export default class CountriesTable {
   addEvents(e) {
     let stat = e.target.id.split(' ').join('');
     if (stat !== this.currentStat) {
+        this.currentStat = stat;
         this.sortCountries(stat);
         this.createTable(e.target.id);
-        this.parent.chart.worldTotal(stat);
+        if (this.currentCountry != null) {
+          this.parent.chart.countryCases(this.currentCountry, stat);
+        } else {
+          this.parent.chart.worldTotal(stat);
+        }
+        
     }
   }
 

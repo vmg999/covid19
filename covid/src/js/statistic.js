@@ -4,7 +4,8 @@ import { addDigitSeparator } from './functions.js';
 const EarthPopulationR100k = 78270;
 
 export default class StatisticTable {
-  constructor(data) {
+  constructor(data, parent) {
+    this.parent = parent;
     this.data = data;
     this.block = document.getElementById("statistic_table");
     this.elements = {
@@ -62,6 +63,8 @@ export default class StatisticTable {
       globe_button.addEventListener('click', () => {
           this.setRegion('Global');
           this.createTable();
+          this.parent.countries.currentCountry = null;
+          this.parent.chart.worldTotal(this.parent.countries.currentStat);
       })
       img.src = `https://www.countryflags.io/${country_code}/flat/32.png`;
       this.elements.region.innerHTML = '';
