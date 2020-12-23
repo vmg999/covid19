@@ -58,6 +58,7 @@ async function getCountriesPopulation() {
 
 export async function getCountryPopulationDividedBy100k(country) {
   const data = await getCountriesPopulation();
-  const countryInfo = data.find((countryData) => countryData.name === country);
+  const re = new RegExp(country);
+  const countryInfo = data.find((countryData) => countryData.name.search(re) === 0);
   return Math.ceil(Number(countryInfo.population) / 100000);
 }

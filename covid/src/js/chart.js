@@ -1,9 +1,8 @@
 /* eslint-disable no-undef */
 /* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable import/extensions */
-import { getFullScreenButton } from './buttons.js';
-import 'chart.js/dist/Chart.js';
-import { getWorldTotal, getDataByCountry } from './api_data.js';
+import { getFullScreenButton } from './buttons';
+import 'chart.js/dist/Chart';
+import { getWorldTotal, getDataByCountry } from './api_data';
 
 const chartLayout = [
   {

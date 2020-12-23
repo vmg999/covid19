@@ -1,10 +1,9 @@
 /* eslint-disable no-restricted-syntax */
-/* eslint-disable import/extensions */
 import {
   getFullScreenButton, buttonGroup, keyboardButton, resetInput,
-} from './buttons.js';
-import { addDigitSeparator } from './functions.js';
-import { getCountryPopulationDividedBy100k } from './api_data.js';
+} from './buttons';
+import { addDigitSeparator } from './functions';
+import { getCountryPopulationDividedBy100k } from './api_data';
 
 export default class CountriesTable {
   constructor(data, parent) {
@@ -16,11 +15,13 @@ export default class CountriesTable {
     this.id = 'country_cases';
     this.table_id = 'country_table';
     this.table = null;
-    this.currentStat = 'TotalConfirmed';
     this.currentCountry = 'Global';
     this.search = null;
     this.keyboardButton = keyboardButton();
     this.resetInput = resetInput();
+    this.currentStat = 'TotalConfirmed';
+    this.period = 'Total';
+    this.statistic = 'Absolute';
   }
 
   async createSearch() {
@@ -77,7 +78,50 @@ export default class CountriesTable {
     });
   }
 
-  async createTable(value = 'Total Confirmed') {
+  async createTable() {
+    this.period = this.parent.statistic.state.period;
+    this.statistic = this.parent.statistic.state.stat;
+    let field;
+    let columnHead;
+
+    if (this.currentStat === 'TotalConfirmed' && this.period === 'Total' && this.statistic === 'Absolute') {
+      field = 'TotalConfirmed';
+      columnHead = 'Total Confirmed';
+    } else if (this.currentStat === 'TotalDeaths' && this.period === 'Total' && this.statistic === 'Absolute') {
+      field = 'TotalDeaths';
+      columnHead = 'Total Deaths';
+    } else if (this.currentStat === 'TotalRecovered' && this.period === 'Total' && this.statistic === 'Absolute') {
+      field = 'TotalRecovered';
+      columnHead = 'Total Recovered';
+    } else if (this.currentStat === 'TotalConfirmed' && this.period === 'Today' && this.statistic === 'Absolute') {
+      field = 'NewConfirmed';
+      columnHead = 'Today Confirmed';
+    } else if (this.currentStat === 'TotalDeaths' && this.period === 'Today' && this.statistic === 'Absolute') {
+      field = 'NewDeaths';
+      columnHead = 'Today Deaths';
+    } else if (this.currentStat === 'TotalRecovered' && this.period === 'Today' && this.statistic === 'Absolute') {
+      field = 'NewRecovered';
+      columnHead = 'Today Recovered';
+    } else if (this.currentStat === 'TotalConfirmed' && this.period === 'Total' && this.statistic === 'By 100k') {
+      field = 'TotalConfirmed';
+      columnHead = 'Total Conf./100k';
+    } else if (this.currentStat === 'TotalDeaths' && this.period === 'Total' && this.statistic === 'By 100k') {
+      field = 'TotalDeaths';
+      columnHead = 'Total Deaths/100k';
+    } else if (this.currentStat === 'TotalRecovered' && this.period === 'Total' && this.statistic === 'By 100k') {
+      field = 'TotalRecovered';
+      columnHead = 'Total Recov./100k';
+    } else if (this.currentStat === 'TotalConfirmed' && this.period === 'Today' && this.statistic === 'By 100k') {
+      field = 'NewConfirmed';
+      columnHead = 'Today Conf./100k';
+    } else if (this.currentStat === 'TotalDeaths' && this.period === 'Today' && this.statistic === 'By 100k') {
+      field = 'NewDeaths';
+      columnHead = 'Today Deaths/100k';
+    } else if (this.currentStat === 'TotalRecovered' && this.period === 'Today' && this.statistic === 'By 100k') {
+      field = 'NewRecovered';
+      columnHead = 'Today Recov./100k';
+    }
+
     const tableDiv = document.getElementById(this.table_id);
     this.table = document.createElement('table');
     this.table.classList.add('table', 'table-dark', 'table-hover');
@@ -87,7 +131,7 @@ export default class CountriesTable {
     const th3 = document.createElement('th');
     th1.textContent = '';
     th2.textContent = 'Country';
-    th3.textContent = value;
+    th3.textContent = columnHead;
     th1.setAttribute('scope', 'col');
     th1.classList.add('table_head');
     th1.style = 'width: 10%';
@@ -103,7 +147,7 @@ export default class CountriesTable {
 
     this.table.append(thead);
 
-    await this.countries.forEach((el, key) => {
+    await this.countries.forEach(async (el, key) => {
       const row = this.table.insertRow(key);
       row.classList.add('table-row');
 
@@ -145,7 +189,16 @@ export default class CountriesTable {
 
       flag.append(img);
       country.textContent = el.Country;
-      total.textContent = addDigitSeparator(el[value.split(' ').join('')]);
+      if (this.statistic === 'By 100k') {
+        try {
+          const divider = await getCountryPopulationDividedBy100k(el.Country);
+          total.textContent = addDigitSeparator(Math.ceil(el[field] / divider));
+        } catch (err) {
+          total.textContent = 'No data';
+        }
+      } else {
+        total.textContent = addDigitSeparator(el[field]);
+      }
     });
 
     tableDiv.innerHTML = '';
@@ -178,7 +231,7 @@ export default class CountriesTable {
     if (stat !== this.currentStat) {
       this.currentStat = stat;
       this.sortCountries(stat);
-      this.createTable(e.target.id);
+      this.createTable();
       if (this.currentCountry !== 'Global') {
         this.parent.chart.countryCases(this.currentCountry, stat);
       } else {

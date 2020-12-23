@@ -1,7 +1,6 @@
-/* eslint-disable import/extensions */
-import { getFullScreenButton } from './buttons.js';
-import L from './leaflet.js';
-import { addDigitSeparator, sliceZeros, getCoordinates } from './functions.js';
+import { getFullScreenButton } from './buttons';
+import L from './leaflet';
+import { addDigitSeparator, sliceZeros, getCoordinates } from './functions';
 
 const Token = 'pk.eyJ1Ijoidm1nOTk5IiwiYSI6ImNraXVxYTRuaTMyanUyeXFqdWI5aGFzcnEifQ.0GI3zMsWmnz6X--jidn8ew';
 const maincolors = ['#FFEDA0', '#FED976', '#FD8D3C', '#FC4E2A', '#E31A1C', '#f00'];

@@ -1,5 +1,4 @@
 /* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable import/extensions */
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './css/keyboard.css';
@@ -11,13 +10,13 @@ import './css/footer.css';
 import './css/buttons.css';
 import './css/leaflet.css';
 import './css/main.css';
-import getData from './js/api_data.js';
-import CountriesTable from './js/countries.js';
-import StatisticTable from './js/statistic.js';
-import { addDigitSeparator, getDate } from './js/functions.js';
-import Map from './js/map.js';
-import DataChart from './js/chart.js';
-import Keyboard from './js/keyboard.js';
+import getData from './js/api_data';
+import CountriesTable from './js/countries';
+import StatisticTable from './js/statistic';
+import { addDigitSeparator, getDate } from './js/functions';
+import Map from './js/map';
+import DataChart from './js/chart';
+import Keyboard from './js/keyboard';
 
 class Dashboard {
   constructor() {

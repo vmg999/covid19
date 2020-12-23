@@ -1,7 +1,6 @@
 /* eslint-disable no-restricted-syntax */
-/* eslint-disable import/extensions */
-import { getFullScreenButton, buttonGroup, globe } from './buttons.js';
-import { addDigitSeparator } from './functions.js';
+import { getFullScreenButton, buttonGroup, globe } from './buttons';
+import { addDigitSeparator } from './functions';
 
 const EarthPopulationR100k = 78270;
 
@@ -175,6 +174,7 @@ export default class StatisticTable {
         this.state.period = el;
         this.createTable();
         this.parent.map.createDataLayer();
+        this.parent.countries.createTable();
       });
     });
 
@@ -182,6 +182,7 @@ export default class StatisticTable {
       document.getElementById(el).addEventListener('click', () => {
         this.state.stat = el;
         this.createTable();
+        this.parent.countries.createTable();
       });
     });
   }
