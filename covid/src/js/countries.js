@@ -1,6 +1,10 @@
-import { fullScreenButton, buttonGroup, keyboardButton, resetInput } from "./buttons.js";
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable import/extensions */
+import {
+  getFullScreenButton, buttonGroup, keyboardButton, resetInput,
+} from './buttons.js';
 import { addDigitSeparator } from './functions.js';
-import { getCountryPopulationR100k } from './api_data.js';
+import { getCountryPopulationDividedBy100k } from './api_data.js';
 
 export default class CountriesTable {
   constructor(data, parent) {
@@ -8,10 +12,10 @@ export default class CountriesTable {
     this.parent = parent;
     this.data = data;
     this.countries = data.Countries;
-    this.sortCountries("TotalConfirmed");
-    this.id = "country_cases";
-    this.table_id = "country_table";
-    this.table =  null;
+    this.sortCountries('TotalConfirmed');
+    this.id = 'country_cases';
+    this.table_id = 'country_table';
+    this.table = null;
     this.currentStat = 'TotalConfirmed';
     this.currentCountry = 'Global';
     this.search = null;
@@ -24,35 +28,35 @@ export default class CountriesTable {
     this.search.classList.add('form-control', 'search');
     this.search.setAttribute('type', 'text');
     this.search.setAttribute('placeholder', 'country');
-    let event = new Event('input', {
+    const event = new Event('input', {
       bubbles: true,
       cancelable: true,
     });
 
-    let table = document.querySelectorAll('.table-row');
+    const table = document.querySelectorAll('.table-row');
 
     this.search.addEventListener('input', (e) => {
-        if (e.target.value !== '') {
-            table.forEach((el) => {
-                el.classList.remove('hide');
-            })
-            let re = new RegExp(`${e.target.value}`, 'i');
-            table.forEach((el) => {
-                if (el.childNodes[1].innerText.search(re) == -1) {
-                    el.classList.add('hide');
-                }
-            })
-        } else {
-            table.forEach((el) => {
-                el.classList.remove('hide');
-            })
-        }
-    })
+      if (e.target.value !== '') {
+        table.forEach((el) => {
+          el.classList.remove('hide');
+        });
+        const re = new RegExp(`${e.target.value}`, 'i');
+        table.forEach((el) => {
+          if (el.childNodes[1].innerText.search(re) === -1) {
+            el.classList.add('hide');
+          }
+        });
+      } else {
+        table.forEach((el) => {
+          el.classList.remove('hide');
+        });
+      }
+    });
 
     this.resetInput.addEventListener('click', () => {
       this.search.value = '';
       this.search.dispatchEvent(event);
-    })
+    });
 
     this.block.innerHTML = '';
     this.block.append(this.keyboardButton);
@@ -60,9 +64,9 @@ export default class CountriesTable {
     this.block.append(this.resetInput);
   }
 
-  async sortCountries(order) {
+  sortCountries(order) {
     const ord = order;
-    await this.countries.sort((a, b) => {
+    this.countries.sort((a, b) => {
       if (a[ord] > b[ord]) {
         return -1;
       }
@@ -73,24 +77,24 @@ export default class CountriesTable {
     });
   }
 
-  async createTable(value = "Total Confirmed") {
-    let tableDiv = document.getElementById(this.table_id);
-    this.table = document.createElement("table");
-    this.table.classList.add("table", "table-dark", "table-hover");
-    const thead = document.createElement("thead");
-    const th1 = document.createElement("th");
-    const th2 = document.createElement("th");
-    const th3 = document.createElement("th");
-    th1.textContent = "";
-    th2.textContent = "Country";
+  async createTable(value = 'Total Confirmed') {
+    const tableDiv = document.getElementById(this.table_id);
+    this.table = document.createElement('table');
+    this.table.classList.add('table', 'table-dark', 'table-hover');
+    const thead = document.createElement('thead');
+    const th1 = document.createElement('th');
+    const th2 = document.createElement('th');
+    const th3 = document.createElement('th');
+    th1.textContent = '';
+    th2.textContent = 'Country';
     th3.textContent = value;
-    th1.setAttribute("scope", "col");
+    th1.setAttribute('scope', 'col');
     th1.classList.add('table_head');
-    th1.style = "width: 10%";
-    th2.setAttribute("scope", "col");
+    th1.style = 'width: 10%';
+    th2.setAttribute('scope', 'col');
     th2.classList.add('table_head');
-    th2.style = "width: 55%";
-    th3.setAttribute("scope", "col");
+    th2.style = 'width: 55%';
+    th3.setAttribute('scope', 'col');
     th3.classList.add('table_head');
 
     thead.append(th1);
@@ -111,35 +115,32 @@ export default class CountriesTable {
       }
       const total = row.insertCell(2);
 
-      country.addEventListener('click', (e) => {
-        let curCountry = e.target.textContent
+      country.addEventListener('click', async (e) => {
+        const curCountry = e.target.textContent;
         if (this.currentCountry !== curCountry) {
-          for (let row of this.table.rows) {
-            row.removeAttribute('id');
+          for (const Row of this.table.rows) {
+            Row.removeAttribute('id');
           }
           this.currentCountry = curCountry;
-          let divider = getCountryPopulationR100k(curCountry);
-          divider.then((result)=>{
-              this.parent.statistic.state.divide100k = result;
-              this.parent.statistic.setRegion(curCountry);
-              this.parent.statistic.createTable();
-          })
-          
+          const divider = await getCountryPopulationDividedBy100k(curCountry);
+          this.parent.statistic.state.divide100k = divider;
+          this.parent.statistic.setRegion(curCountry);
+          this.parent.statistic.createTable();
+
           this.parent.chart.countryCases(curCountry, this.currentStat);
-  
+
           row.setAttribute('id', 'active');
         } else if (this.currentCountry === curCountry) {
-          this.currentCountry = "Global";
-          this.parent.statistic.setRegion("Global");
+          this.currentCountry = 'Global';
+          this.parent.statistic.setRegion('Global');
           this.parent.statistic.createTable();
           this.parent.chart.worldTotal(this.currentStat);
 
           row.removeAttribute('id');
         }
+      });
 
-      })
-
-      const img = document.createElement("img");
+      const img = document.createElement('img');
       img.src = `https://www.countryflags.io/${el.CountryCode}/flat/16.png`;
 
       flag.append(img);
@@ -147,47 +148,44 @@ export default class CountriesTable {
       total.textContent = addDigitSeparator(el[value.split(' ').join('')]);
     });
 
-
-    tableDiv.innerHTML='';
+    tableDiv.innerHTML = '';
     tableDiv.append(this.table);
     await this.createSearch();
   }
 
   createButtons() {
-    let countries_div = document.getElementById(this.id);
+    const countriesDiv = document.getElementById(this.id);
     const arr = ['Total Confirmed', 'Total Deaths', 'Total Recovered'];
-    
 
-    let full_screen_button = fullScreenButton();
-    full_screen_button.classList.add("full_screen");
-    full_screen_button.addEventListener("click", () => {
-      countries_div.classList.toggle("country_cases");
-      countries_div.classList.toggle("country_cases_full");
+    const fullScreenButton = getFullScreenButton();
+    fullScreenButton.classList.add('full_screen');
+    fullScreenButton.addEventListener('click', () => {
+      countriesDiv.classList.toggle('country_cases');
+      countriesDiv.classList.toggle('country_cases_full');
     });
-    countries_div.append(full_screen_button);
+    countriesDiv.append(fullScreenButton);
 
-    let statistic_buttons = buttonGroup(arr);
-    statistic_buttons.classList.add('firstplan');
-    countries_div.append(statistic_buttons);
+    const statisticButtons = buttonGroup(arr);
+    statisticButtons.classList.add('firstplan');
+    countriesDiv.append(statisticButtons);
     arr.forEach((el) => {
-        document.getElementById(el).addEventListener('click', this.addEvents.bind(this));
-    })
+      document.getElementById(el).addEventListener('click', this.addEvents.bind(this));
+    });
   }
 
   addEvents(e) {
-    let stat = e.target.id.split(' ').join('');
+    const stat = e.target.id.split(' ').join('');
     if (stat !== this.currentStat) {
-        this.currentStat = stat;
-        this.sortCountries(stat);
-        this.createTable(e.target.id);
-        if (this.currentCountry !== 'Global') {
-          this.parent.chart.countryCases(this.currentCountry, stat);
-        } else {
-          this.parent.chart.worldTotal(stat);
-        }
-        
-        this.parent.map.createDataLayer();
+      this.currentStat = stat;
+      this.sortCountries(stat);
+      this.createTable(e.target.id);
+      if (this.currentCountry !== 'Global') {
+        this.parent.chart.countryCases(this.currentCountry, stat);
+      } else {
+        this.parent.chart.worldTotal(stat);
+      }
+
+      this.parent.map.createDataLayer();
     }
   }
-
 }
