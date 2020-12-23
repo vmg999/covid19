@@ -216,12 +216,12 @@ export default class Map {
     if(this.state === 'TotalRecovered' && this.period === 'Total') {
       label = 'Total Recovered';
       grades = TotalRecoveredScale;
-      colors = redcolors;
+      colors = greencolors;
     }
     if(this.state === 'TotalRecovered' && this.period === 'Today') {
       label = 'Today Recovered';
       grades = NewRecoveredScale;
-      colors = redcolors;
+      colors = greencolors;
     }
 
     this.legend.onAdd = function () {
