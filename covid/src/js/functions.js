@@ -19,9 +19,9 @@ export function sliceZeros(num) {
   let n = + num;
 
   if (n > 1000 && n < 1000000) {
-    casesString = `${casesString.slice(0, -3)}k+`;
+    casesString = `${casesString.slice(0, -3)}k`;
   } else if (n >= 1000000) {
-    casesString = `${casesString.slice(0, -6)}M+`;
+    casesString = `${casesString.slice(0, -6)}M`;
   }
 
   return casesString;

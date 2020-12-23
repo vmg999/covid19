@@ -10,6 +10,8 @@ export default async function getData() {
         if (resp.Message !== 'Caching in progress') {
             localStorage.summaryData = JSON.stringify(resp);
             localStorage.summaryDataUpdate = Date.now();
+        } else if (resp.Message === 'Caching in progress' && localStorage.summaryData != 'null') {
+            return JSON.parse(localStorage.summaryData);
         }
 
         return resp;

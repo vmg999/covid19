@@ -7,8 +7,6 @@ import './css/map.css';
 import './css/chart.css';
 import './css/footer.css';
 import './css/buttons.css';
-
-
 import './css/leaflet.css';
 import './css/main.css';
 import getData from './js/api_data.js';
@@ -47,7 +45,7 @@ class Dashboard {
     }
 
     async showDate(data) {
-        const date = await new Date(data.Date);
+        const date = new Date(await data.Date);
         this.actual_date.textContent = `Data actual on: ${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}  ${date.getHours()}:${addZero(date.getMinutes())}`;
     }
 
@@ -71,7 +69,6 @@ class Dashboard {
             this.map.createButtons();
             this.map.createMap();
             this.map.createDataLayer();
-            this.map.createLegend();
 
             this.chart = new DataChart();
             this.chart.worldTotal();

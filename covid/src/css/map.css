@@ -8,6 +8,7 @@
     flex: 6 0 20vw;
     height: auto;
     position: relative;
+    transition:all 1s;
   }
   
   #leafmap {
@@ -94,4 +95,15 @@
     height: 18px;
     float: left;
     margin-right: 8px;
+  }
+
+  .map_full {
+    color: var(--txtcolor);
+    position: absolute;
+    top: 5vh;
+    left: 0;
+    bottom: 5vh;
+    right: 0;
+    z-index: 1111;
+    transition:all 1s;
   }

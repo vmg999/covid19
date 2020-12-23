@@ -169,6 +169,7 @@ export default class StatisticTable {
         document.getElementById(el).addEventListener('click', () => {
             this.state.period = el;
             this.createTable();
+            this.parent.map.createDataLayer();
         });
     })
 

@@ -186,6 +186,7 @@ export default class CountriesTable {
           this.parent.chart.worldTotal(stat);
         }
         
+        this.parent.map.createDataLayer();
     }
   }
 
