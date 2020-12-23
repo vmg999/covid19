@@ -13,7 +13,7 @@ export default class CountriesTable {
     this.table_id = "country_table";
     this.table =  null;
     this.currentStat = 'TotalConfirmed';
-    this.currentCountry = null;
+    this.currentCountry = 'Global';
     this.search = null;
     this.keyboardButton = keyboardButton();
     this.resetInput = resetInput();
