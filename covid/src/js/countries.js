@@ -122,6 +122,7 @@ export default class CountriesTable {
       columnHead = 'Today Recov./100k';
     }
 
+    this.sortCountries(field);
     const tableDiv = document.getElementById(this.table_id);
     this.table = document.createElement('table');
     this.table.classList.add('table', 'table-dark', 'table-hover');
@@ -230,7 +231,6 @@ export default class CountriesTable {
     const stat = e.target.id.split(' ').join('');
     if (stat !== this.currentStat) {
       this.currentStat = stat;
-      this.sortCountries(stat);
       this.createTable();
       if (this.currentCountry !== 'Global') {
         this.parent.chart.countryCases(this.currentCountry, stat);
