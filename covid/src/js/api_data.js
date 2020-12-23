@@ -7,8 +7,10 @@ export default async function getData() {
     if (localStorage.summaryData === 'null' || Date.now() > (+localStorage.summaryDataUpdate + 60000) ) {
         let response = await fetch('https://api.covid19api.com/summary', {mode: "cors"})
         let resp = await response.json();
-        localStorage.summaryData = JSON.stringify(resp);
-        localStorage.summaryDataUpdate = Date.now();
+        if (resp.Message !== 'Caching in progress') {
+            localStorage.summaryData = JSON.stringify(resp);
+            localStorage.summaryDataUpdate = Date.now();
+        }
 
         return resp;
     } else {
