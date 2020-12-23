@@ -28,7 +28,7 @@ footer {
 #github {
   height: 4vh;
   width: 8vh;
-  background-image: url("../img/github.png");
+  background-image: url("img/github.png");
   background-size: contain;
   background-repeat: no-repeat;
 }
@@ -36,7 +36,7 @@ footer {
 #logo {
   height: 4vh;
   width: 10vh;
-  background-image: url("../img/rs_school_js.svg");
+  background-image: url("img/rs_school_js.svg");
   background-size: contain;
   background-repeat: no-repeat;
 }
