@@ -110,6 +110,7 @@ export default class Map {
         const { properties = {} } = feature;
         let updatedFormatted;
         let casesString;
+        let current;
 
         const {
           Country,
@@ -124,16 +125,22 @@ export default class Map {
 
         if (this.state === 'TotalConfirmed' && this.period === 'Total') {
           casesString = +TotalConfirmed;
+          current = 'Total Confirmed';
         } else if (this.state === 'TotalDeaths' && this.period === 'Total') {
           casesString = +TotalDeaths;
+          current = 'Total Deaths';
         } else if (this.state === 'TotalRecovered' && this.period === 'Total') {
           casesString = +TotalRecovered;
+          current = 'Total Recovered';
         } else if (this.state === 'TotalConfirmed' && this.period === 'Today') {
           casesString = +NewConfirmed;
+          current = 'Today Confirmed';
         } else if (this.state === 'TotalDeaths' && this.period === 'Today') {
           casesString = +NewDeaths;
+          current = 'Today Deaths';
         } else if (this.state === 'TotalRecovered' && this.period === 'Today') {
           casesString = +NewRecovered;
+          current = 'Today Recovered';
         }
         
 
@@ -148,6 +155,8 @@ export default class Map {
               <span class="icon-marker-tooltip">
                 <h2>${Country}</h2>
                 <ul>
+                  <li>Map shows ${current} Cases</li>
+                  <hr>
                   <li>Confirmed: ${addDigitSeparator(TotalConfirmed)}</li>
                   <li>Deaths: ${addDigitSeparator(TotalDeaths)}</li>
                   <li>Recovered: ${addDigitSeparator(TotalRecovered)}</li>
@@ -188,7 +197,7 @@ export default class Map {
     if (this.legend != null) {
       this.legend.remove();
     }
-    this.legend = L.control({ position: "bottomleft" });
+    this.legend = L.control({ position: "bottomright" });
     let label;
     let grades;
     let colors;
