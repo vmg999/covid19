@@ -157,13 +157,21 @@ export default class Map {
         html.style.height = MarkerLayout.size;
         html.innerHTML = span;
 
-        return L.marker(latlng, {
+        const marker = L.marker(latlng, {
           icon: L.divIcon({
             className: 'icon',
             html,
           }),
           riseOnHover: true,
         });
+        marker.on('click', () => {
+          this.parent.countries.currentCountry = Country;
+          this.parent.countries.createTable();
+          this.parent.statistic.setRegion(Country);
+          this.parent.statistic.createTable();
+          this.parent.chart.countryCases(Country, this.parent.countries.currentStat);
+        });
+        return marker;
       },
     });
 
