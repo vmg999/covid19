@@ -69,6 +69,7 @@ export default class StatisticTable {
           row.removeAttribute('id');
         }
         this.parent.chart.worldTotal(this.parent.countries.currentStat);
+        this.parent.map.leafmap.setView([25, 20], 2);
       });
       img.src = `https://www.countryflags.io/${countryCode}/flat/32.png`;
       this.elements.region.innerHTML = '';

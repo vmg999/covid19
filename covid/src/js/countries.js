@@ -2,7 +2,7 @@
 import {
   getFullScreenButton, buttonGroup, keyboardButton, resetInput,
 } from './buttons';
-import { addDigitSeparator } from './functions';
+import { addDigitSeparator, getCoordinates } from './functions';
 import { getCountryPopulationDividedBy100k } from './api_data';
 
 export default class CountriesTable {
@@ -175,6 +175,9 @@ export default class CountriesTable {
           this.parent.chart.countryCases(curCountry, this.currentStat);
 
           row.setAttribute('id', 'active');
+
+          const coordinates = getCoordinates(curCountry);
+          this.parent.map.leafmap.setView([coordinates.Lat, coordinates.Lon], 5);
         } else if (this.currentCountry === curCountry) {
           this.currentCountry = 'Global';
           this.parent.statistic.setRegion('Global');
@@ -182,6 +185,8 @@ export default class CountriesTable {
           this.parent.chart.worldTotal(this.currentStat);
 
           row.removeAttribute('id');
+
+          this.parent.map.leafmap.setView([25, 20], 2);
         }
       });
 
