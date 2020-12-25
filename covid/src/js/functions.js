@@ -16,14 +16,14 @@ export function addDigitSeparator(num) {
   return tmp.reverse().join('');
 }
 
-export function sliceZeros(num) {
+export function sliceZeros(num, plus = '') {
   let casesString = `${num}`;
   const n = +num;
 
   if (n > 1000 && n < 1000000) {
-    casesString = `${casesString.slice(0, -3)}k`;
+    casesString = `${casesString.slice(0, -3)}k${plus}`;
   } else if (n >= 1000000) {
-    casesString = `${casesString.slice(0, -6)}M`;
+    casesString = `${casesString.slice(0, -6)}M${plus}`;
   }
 
   return casesString;

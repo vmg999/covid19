@@ -146,7 +146,7 @@ export default class Map {
                   <li>Last Update: ${updatedFormatted}</li>
                 </ul>
               </span>
-              ${sliceZeros(casesString)}+
+              ${sliceZeros(casesString, '+')}
           `;
 
         const html = document.createElement('span');

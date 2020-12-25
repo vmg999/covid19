@@ -1499,7 +1499,6 @@ url("fonts/bootstrap-icons.woff2?052ad648d829c462d284477c1ceb645d") format("woff
     flex: 6 0 20vw;
     height: auto;
     position: relative;
-    transition:all 1s;
   }
   
   #leafmap {
@@ -1596,7 +1595,6 @@ url("fonts/bootstrap-icons.woff2?052ad648d829c462d284477c1ceb645d") format("woff
     bottom: 5vh;
     right: 0;
     z-index: 1111;
-    transition:all 1s;
   }
 
 .chart_block {
