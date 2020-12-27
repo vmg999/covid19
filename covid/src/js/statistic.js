@@ -65,6 +65,7 @@ export default class StatisticTable {
         this.setRegion('Global');
         this.createTable();
         this.parent.countries.currentCountry = 'Global';
+        this.parent.countries.currentCountryRow = null;
         for (const row of this.parent.countries.table.rows) {
           row.removeAttribute('id');
         }

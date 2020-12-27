@@ -14,8 +14,10 @@ export default class CountriesTable {
     this.sortCountries('TotalConfirmed');
     this.id = 'country_cases';
     this.table_id = 'country_table';
+    this.tableDiv = null;
     this.table = null;
     this.currentCountry = 'Global';
+    this.currentCountryRow = null;
     this.search = null;
     this.keyboardButton = keyboardButton();
     this.resetInput = resetInput();
@@ -123,7 +125,7 @@ export default class CountriesTable {
     }
 
     this.sortCountries(field);
-    const tableDiv = document.getElementById(this.table_id);
+    this.tableDiv = document.getElementById(this.table_id);
     this.table = document.createElement('table');
     this.table.classList.add('table', 'table-dark', 'table-hover');
     const thead = document.createElement('thead');
@@ -157,6 +159,7 @@ export default class CountriesTable {
       country.classList.add('cell');
       if (this.currentCountry === el.Country) {
         row.setAttribute('id', 'active');
+        this.currentCountryRow = key;
       }
       const total = row.insertCell(2);
 
@@ -175,6 +178,7 @@ export default class CountriesTable {
           this.parent.chart.countryCases(curCountry, this.currentStat);
 
           row.setAttribute('id', 'active');
+          this.currentCountryRow = key;
 
           const coordinates = getCoordinates(curCountry);
           this.parent.map.leafmap.setView([coordinates.Lat, coordinates.Lon], 5);
@@ -185,6 +189,7 @@ export default class CountriesTable {
           this.parent.chart.worldTotal(this.currentStat);
 
           row.removeAttribute('id');
+          this.currentCountryRow = null;
 
           this.parent.map.leafmap.setView([25, 20], 2);
         }
@@ -207,9 +212,24 @@ export default class CountriesTable {
       }
     });
 
-    tableDiv.innerHTML = '';
-    tableDiv.append(this.table);
+    this.tableDiv.innerHTML = '';
+    this.tableDiv.append(this.table);
     await this.createSearch();
+    this.scrollToActive();
+  }
+
+  scrollToActive() {
+    if (this.currentCountryRow != null) {
+      const rowHeight = this.tableDiv.scrollHeight / (this.countries.length - 1);
+      const offsetY = rowHeight * this.currentCountryRow - 3 * rowHeight;
+      this.tableDiv.scrollTo({
+        top: offsetY,
+        left: 0,
+        behavior: 'smooth',
+      });
+    } else {
+      this.tableDiv.scrollTo(0, 0);
+    }
   }
 
   createButtons() {
