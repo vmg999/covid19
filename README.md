@@ -1,2 +1,4 @@
-# vmg999-JS2020Q3
-Private repository for @vmg999
+# vmg999
+Covid 19 Dashboard
+
+!()[https://i.imgur.com/sL8hDse.png]
