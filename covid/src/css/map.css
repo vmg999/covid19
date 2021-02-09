@@ -98,10 +98,10 @@
 
   .map_full {
     color: var(--txtcolor);
+    height: calc(90vh - 10px);
     position: absolute;
     top: 5vh;
     left: 0;
-    bottom: 5vh;
     right: 0;
     z-index: 1111;
   }

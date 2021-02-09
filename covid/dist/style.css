@@ -1392,7 +1392,7 @@ url("fonts/bootstrap-icons.woff2?052ad648d829c462d284477c1ceb645d") format("woff
     align-items: center;
   }
   .country_cases {
-    flex: 1 0 70vh;
+    flex: 1;
     color: var(--txtcolor);
     position: relative;
   }
@@ -1415,10 +1415,10 @@ url("fonts/bootstrap-icons.woff2?052ad648d829c462d284477c1ceb645d") format("woff
   
   .country_cases_full {
     color: var(--txtcolor);
+    height: calc(90vh - 10px);
     position: absolute;
     top: 5vh;
     left: 0;
-    bottom: 5vh;
     right: 0;
     z-index: 1111;
   }
@@ -1450,10 +1450,10 @@ url("fonts/bootstrap-icons.woff2?052ad648d829c462d284477c1ceb645d") format("woff
   
   .statistic_table_full {
     color: var(--txtcolor);
+    height: calc(90vh - 10px);
     position: absolute;
     top: 5vh;
     left: 0;
-    bottom: 5vh;
     right: 0;
     z-index: 1113;
   }
@@ -1589,10 +1589,10 @@ url("fonts/bootstrap-icons.woff2?052ad648d829c462d284477c1ceb645d") format("woff
 
   .map_full {
     color: var(--txtcolor);
+    height: calc(90vh - 10px);
     position: absolute;
     top: 5vh;
     left: 0;
-    bottom: 5vh;
     right: 0;
     z-index: 1111;
   }
@@ -1618,8 +1618,6 @@ footer {
   height: 5vh;
   background-color: var(--gray);
   color: var(--txtcolor);
-  position: absolute;
-  bottom: 0;
   display: flex;
   justify-content: space-evenly;
   align-items: center;

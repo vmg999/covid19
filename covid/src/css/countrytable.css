@@ -30,7 +30,7 @@
     align-items: center;
   }
   .country_cases {
-    flex: 1 0 70vh;
+    flex: 1;
     color: var(--txtcolor);
     position: relative;
   }
@@ -53,10 +53,10 @@
   
   .country_cases_full {
     color: var(--txtcolor);
+    height: calc(90vh - 10px);
     position: absolute;
     top: 5vh;
     left: 0;
-    bottom: 5vh;
     right: 0;
     z-index: 1111;
   }

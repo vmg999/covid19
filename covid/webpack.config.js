@@ -1,33 +1,33 @@
-var path = require("path");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
+const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const cssLoaders = (...extra) => {
-    const loaders = [
-      {
-        loader: MiniCssExtractPlugin.loader,
-        options: {
-          publicPath: '',
-        },
+  const loaders = [
+    {
+      loader: MiniCssExtractPlugin.loader,
+      options: {
+        publicPath: '',
       },
-      {
-        loader: 'css-loader',
-        options: { url: false},
-      },
-    ]
-  
-    if (extra) {
-      loaders.push(...extra)
-    }
-  
-    return loaders
+    },
+    {
+      loader: 'css-loader',
+      options: { url: false },
+    },
+  ];
+
+  if (extra) {
+    loaders.push(...extra);
   }
 
+  return loaders;
+};
+
 module.exports = {
-  entry: "./src/index.js",
+  entry: './src/index.js',
   output: {
-    filename: "index.js",
-    path: path.resolve(__dirname, "dist"),
+    filename: 'index.js',
+    path: path.resolve(__dirname, 'dist'),
   },
   module: {
     rules: [
@@ -39,10 +39,10 @@ module.exports = {
         test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
         use: [
           {
-            loader: "file-loader",
+            loader: 'file-loader',
             options: {
-              name: "[name].[ext]",
-              outputPath: "fonts/",
+              name: '[name].[ext]',
+              outputPath: 'fonts/',
             },
           },
         ],
@@ -53,21 +53,21 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: "./src/index.html",
-          to: "./index.html",
+          from: './src/index.html',
+          to: './index.html',
         },
         {
-          from: "./src/img",
-          to: "./img",
+          from: './src/img',
+          to: './img',
         },
         {
-            from: "./src/audio",
-            to: "./audio",
+          from: './src/audio',
+          to: './audio',
         },
       ],
     }),
     new MiniCssExtractPlugin({
-        filename: "style.css",
-      }),
+      filename: 'style.css',
+    }),
   ],
 };
