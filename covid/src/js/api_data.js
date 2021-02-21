@@ -5,7 +5,7 @@ export default async function getData() {
   }
 
   if (localStorage.summaryData === 'null' || Date.now() > (+localStorage.summaryDataUpdate + 60000)) {
-    const response = await fetch('https://api.covid19api.com/summary', { mode: 'no-cors' });
+    const response = await fetch('https://api.covid19api.com/summary', { mode: 'gitcors' });
     const resp = await response.json();
     if (resp.Message !== 'Caching in progress') {
       localStorage.summaryData = JSON.stringify(resp);
