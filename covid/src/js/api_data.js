@@ -5,20 +5,19 @@ export default async function getData() {
   }
 
   if (localStorage.summaryData === 'null' || Date.now() > (+localStorage.summaryDataUpdate + 60000)) {
-    const response = await fetch('https://api.covid19api.com/summary', { mode: 'no-cors' });
     let resp;
-    if (!response.ok) {
+    try {
+      const response = await fetch('https://api.covid19api.com/summary', { mode: 'cors' });
+      resp = await response.json();
+      if (resp.Message !== 'Caching in progress') {
+        localStorage.summaryData = JSON.stringify(resp);
+        localStorage.summaryDataUpdate = Date.now();
+      } else if (resp.Message === 'Caching in progress' && localStorage.summaryData !== 'null') {
+        return JSON.parse(localStorage.summaryData);
+      }
+    } catch (e) {
       resp = (await fetch('api-data/summary.json')).json();
-      return resp;
     }
-    resp = await response.json();
-    if (resp.Message !== 'Caching in progress') {
-      localStorage.summaryData = JSON.stringify(resp);
-      localStorage.summaryDataUpdate = Date.now();
-    } else if (resp.Message === 'Caching in progress' && localStorage.summaryData !== 'null') {
-      return JSON.parse(localStorage.summaryData);
-    }
-
     return resp;
   }
   return JSON.parse(localStorage.summaryData);
