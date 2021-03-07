@@ -33,6 +33,7 @@ class Dashboard {
   async init() {
     this.global_cases = document.getElementById('total');
     this.actual_date = document.getElementById('actual_date');
+    this.data_status = document.getElementById('data-status');
 
     this.data = await getData();
   }
@@ -48,6 +49,9 @@ class Dashboard {
   async showDate(data) {
     const date = new Date(await data.Date);
     this.actual_date.textContent = `Data actual on: ${getDate(date)}`;
+    if ((new Date()).getDate() > date.getDate()) {
+      this.data_status.textContent = 'Current data is temporarily unavailable, please try again later';
+    }
   }
 
   async buildApp() {

@@ -64,6 +64,10 @@ module.exports = {
           from: './src/audio',
           to: './audio',
         },
+        {
+          from: './src/api-data',
+          to: './api-data',
+        },
       ],
     }),
     new MiniCssExtractPlugin({
