@@ -35,11 +35,15 @@ export async function getWorldTotal() {
     localStorage.setItem('WorldTotalDataUpdate', Date.now());
   }
   if (localStorage.WorldTotalData === 'null' || Date.now() > (+localStorage.WorldTotalDataUpdate + 60000)) {
-    const response = await fetch('https://covid19-api.org/api/timeline', { mode: 'cors' });
-    const resp = await response.json();
-    localStorage.WorldTotalData = JSON.stringify(resp);
-    localStorage.WorldTotalDataUpdate = Date.now();
-
+    let resp;
+    try {
+      const response = await fetch('https://covid19-api.org/api/timeline', { mode: 'cors' });
+      resp = await response.json();
+      localStorage.WorldTotalData = JSON.stringify(resp);
+      localStorage.WorldTotalDataUpdate = Date.now();
+    } catch (e) {
+      resp = (await fetch('api-data/world_total_timeline.json')).json();
+    }
     return resp;
   }
   return JSON.parse(localStorage.WorldTotalData);

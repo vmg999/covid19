@@ -26,6 +26,10 @@ export default class dataChart {
   constructor() {
     this.block = document.getElementById('chart_block');
     this.chart = document.getElementById('chart').getContext('2d');
+    this.chart.font = '1.5rem Arial bold';
+    this.chart.fillStyle = 'red';
+    this.chart.textAlign = 'center';
+    this.chart.fillText('Please waite...', 150, 50);
     this.charNewObj = null;
 
     this.createButtons();
