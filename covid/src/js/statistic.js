@@ -72,7 +72,9 @@ export default class StatisticTable {
         this.parent.chart.worldTotal(this.parent.countries.currentStat);
         this.parent.map.leafmap.setView([25, 20], 2);
       });
-      img.src = `https://www.countryflags.io/${countryCode}/flat/32.png`;
+      // img.src = `https://www.countryflags.io/${countryCode}/flat/32.png`;
+      img.src = `https://disease.sh/assets/img/flags/${countryCode.toLowerCase()}.png`;
+      img.style.width = '48px';
       this.elements.region.innerHTML = '';
       this.elements.region.append(img);
       this.elements.region.append(reg);

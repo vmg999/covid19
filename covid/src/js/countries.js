@@ -196,7 +196,9 @@ export default class CountriesTable {
       });
 
       const img = document.createElement('img');
-      img.src = `https://www.countryflags.io/${el.CountryCode}/flat/16.png`;
+      // img.src = `https://www.countryflags.io/${el.CountryCode}/flat/16.png`;
+      img.src = `https://disease.sh/assets/img/flags/${el.CountryCode.toLowerCase()}.png`;
+      img.style.width = '32px';
 
       flag.append(img);
       country.textContent = el.Country;
