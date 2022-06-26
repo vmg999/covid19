@@ -1,4 +1,5 @@
 import countryCoordinates from './country_coordinates.json';
+import countryPopulation from './country_population.json';
 
 export function addDigitSeparator(num) {
   let digitString = num.toString();
@@ -51,4 +52,10 @@ export function getCoordinates(country) {
     }
   }
   return coordinates;
+}
+
+export function getCountryPopulationDividedBy100k(country) {
+  const re = new RegExp(country);
+  const countryInfo = countryPopulation.find((countryData) => countryData.name.search(re) === 0);
+  return Math.ceil(Number(countryInfo.population) / 100000);
 }

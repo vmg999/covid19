@@ -2,8 +2,7 @@
 import {
   getFullScreenButton, buttonGroup, keyboardButton, resetInput,
 } from './buttons';
-import { addDigitSeparator, getCoordinates } from './functions';
-import { getCountryPopulationDividedBy100k } from './api_data';
+import { addDigitSeparator, getCoordinates, getCountryPopulationDividedBy100k } from './functions';
 
 export default class CountriesTable {
   constructor(data, parent) {
@@ -170,18 +169,19 @@ export default class CountriesTable {
             Row.removeAttribute('id');
           }
           this.currentCountry = curCountry;
-          const divider = await getCountryPopulationDividedBy100k(curCountry);
-          this.parent.statistic.state.divide100k = divider;
-          this.parent.statistic.setRegion(curCountry);
-          this.parent.statistic.createTable();
 
-          this.parent.chart.countryCases(curCountry, this.currentStat);
+          const coordinates = getCoordinates(curCountry);
+          this.parent.map.leafmap.setView([coordinates.Lat, coordinates.Lon], 5);
 
           row.setAttribute('id', 'active');
           this.currentCountryRow = key;
 
-          const coordinates = getCoordinates(curCountry);
-          this.parent.map.leafmap.setView([coordinates.Lat, coordinates.Lon], 5);
+          this.parent.chart.countryCases(curCountry, this.currentStat);
+
+          const divider = getCountryPopulationDividedBy100k(curCountry);
+          this.parent.statistic.state.divide100k = divider;
+          this.parent.statistic.setRegion(curCountry);
+          this.parent.statistic.createTable();
         } else if (this.currentCountry === curCountry) {
           this.currentCountry = 'Global';
           this.parent.statistic.setRegion('Global');
@@ -204,7 +204,7 @@ export default class CountriesTable {
       country.textContent = el.Country;
       if (this.statistic === 'By 100k') {
         try {
-          const divider = await getCountryPopulationDividedBy100k(el.Country);
+          const divider = getCountryPopulationDividedBy100k(el.Country);
           total.textContent = addDigitSeparator(Math.ceil(el[field] / divider));
         } catch (err) {
           total.textContent = 'No data';

@@ -48,25 +48,3 @@ export async function getWorldTotal() {
   }
   return JSON.parse(localStorage.WorldTotalData);
 }
-
-async function getCountriesPopulation() {
-  if (localStorage.countriesPopulation === undefined) {
-    localStorage.setItem('countriesPopulation', null);
-    localStorage.setItem('countriesPopulationUpdate', Date.now());
-  }
-  if (localStorage.countriesPopulation === 'null' || Date.now() > (+localStorage.countriesPopulationUpdate + 3600000)) {
-    const response = await fetch('https://restcountries.eu/rest/v2/all?fields=name;population', { mode: 'cors' });
-    const resp = await response.json();
-    localStorage.countriesPopulation = JSON.stringify(resp);
-    localStorage.countriesPopulationUpdate = Date.now();
-    return resp;
-  }
-  return JSON.parse(localStorage.countriesPopulation);
-}
-
-export async function getCountryPopulationDividedBy100k(country) {
-  const data = await getCountriesPopulation();
-  const re = new RegExp(country);
-  const countryInfo = data.find((countryData) => countryData.name.search(re) === 0);
-  return Math.ceil(Number(countryInfo.population) / 100000);
-}
